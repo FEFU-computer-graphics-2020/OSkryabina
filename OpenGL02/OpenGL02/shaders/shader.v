@@ -1,13 +1,15 @@
-﻿#version 330 core
-
-in vec2 aPosition;
+#version 330 core
+in vec3 aPosition;
 in vec3 aColor;
 
-uniform float scaleFactor;
+out vec4 vertexColor;
 
-out vec3 fColor;
+uniform float scaleFactor;
+uniform mat4 model;
+uniform mat4 projection;
 
 void main() {
-	gl_Position = vec4(aPosition * scaleFactor, 0, 1);
-	fColor = aColor;
+	vec3 newPosition = aPosition;
+	gl_Position = projection * model * vec4(newPosition * scaleFactor, 1.0);
+	vertexColor = vec4(aColor, 1.0);
 }
